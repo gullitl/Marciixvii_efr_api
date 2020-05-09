@@ -33,7 +33,7 @@ namespace Marciixvii.EFR.App.Controllers {
             return utilisateur;
         }
 
-        [HttpPost("saveutilisateur")]
+        [HttpPost("createutilisateur")]
         public async Task<ActionResult<Utilisateur>> Create(Utilisateur utilisateur) {
             Utilisateur utilisateur1 = await _utilisateurService.Create(utilisateur);
             if(utilisateur1 == null) {
