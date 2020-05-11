@@ -1,4 +1,5 @@
 ﻿using Marciixvii.EFR.App.Contracts;
+using Marciixvii.EFR.App.Helpers;
 using Marciixvii.EFR.App.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,18 +13,15 @@ namespace Marciixvii.EFR.App.Controllers {
         private readonly ILogger<UtilisateurController> _logger;
         private readonly IUtilisateurService _utilisateurService;
 
-        public UtilisateurController(ILogger<UtilisateurController> logger,
-            IUtilisateurService utilisateurService) {
+        public UtilisateurController(ILogger<UtilisateurController> logger, IUtilisateurService utilisateurService) {
             _logger = logger;
             _utilisateurService = utilisateurService;
         }
 
-        [HttpGet("getallutilisateurs")]
-        public async Task<ActionResult<IEnumerable<Utilisateur>>> GetAll() {
-            return await _utilisateurService.GetAll();
-        }
+        [HttpGet(ApiRoute.CrudUrl.GetAll)]
+        public async Task<ActionResult<IEnumerable<Utilisateur>>> GetAll() => await _utilisateurService.GetAll();
 
-        [HttpGet("getutilisateurbyid/{id}")]
+        [HttpGet(ApiRoute.CrudUrl.GetById)]
         public async Task<ActionResult<Utilisateur>> GetById(int id) {
             Utilisateur utilisateur = await _utilisateurService.GetById(id);
             if(utilisateur == null) {
@@ -33,7 +31,7 @@ namespace Marciixvii.EFR.App.Controllers {
             return utilisateur;
         }
 
-        [HttpPost("createutilisateur")]
+        [HttpPost(ApiRoute.CrudUrl.Create)]
         public async Task<ActionResult<Utilisateur>> Create(Utilisateur utilisateur) {
             Utilisateur utilisateur1 = await _utilisateurService.Create(utilisateur);
             if(utilisateur1 == null) {
@@ -42,12 +40,10 @@ namespace Marciixvii.EFR.App.Controllers {
             return Created("", utilisateur1);
         }
 
-        [HttpPut("updateutilisateur")]
-        public async Task<ActionResult<bool>> Update(Utilisateur utilisateur) {
-            return await _utilisateurService.Update(utilisateur);
-        }
+        [HttpPut(ApiRoute.CrudUrl.Update)]
+        public async Task<ActionResult<bool>> Update(Utilisateur utilisateur) => await _utilisateurService.Update(utilisateur);
 
-        [HttpDelete("deleteutilisateurbyid/{id}")]
+        [HttpDelete(ApiRoute.CrudUrl.Delete)]
         public async Task<ActionResult<bool>> Delete(int id) {
             bool found = await _utilisateurService.Delete(id);
 
@@ -58,7 +54,7 @@ namespace Marciixvii.EFR.App.Controllers {
             return found;
         }
 
-        [HttpGet("login/{username}/{password}")]
+        [HttpGet(ApiRoute.UtilisateurUrl.Login)]
         public async Task<ActionResult<Utilisateur>> Login(string username, string password) {
             Utilisateur utilisateur = await _utilisateurService.Login(username, password);
             if(utilisateur == null) {

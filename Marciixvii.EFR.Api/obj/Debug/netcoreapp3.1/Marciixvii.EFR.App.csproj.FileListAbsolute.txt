@@ -69,7 +69,6 @@ C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciix
 C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciixvii.EFR.Api\Marciixvii.EFR.Api\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciixvii.EFR.Api\Marciixvii.EFR.Api\bin\Debug\netcoreapp3.1\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciixvii.EFR.Api\Marciixvii.EFR.Api\bin\Debug\netcoreapp3.1\Pomelo.JsonObject.dll
-C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciixvii.EFR.Api\Marciixvii.EFR.Api\obj\Debug\netcoreapp3.1\Marciixvii.EFR.App.csprojAssemblyReference.cache
 C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciixvii.EFR.Api\Marciixvii.EFR.Api\obj\Debug\netcoreapp3.1\Marciixvii.EFR.App.csproj.CoreCompileInputs.cache
 C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciixvii.EFR.Api\Marciixvii.EFR.Api\obj\Debug\netcoreapp3.1\Marciixvii.EFR.App.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciixvii.EFR.Api\Marciixvii.EFR.Api\obj\Debug\netcoreapp3.1\Marciixvii.EFR.App.AssemblyInfoInputs.cache
@@ -81,3 +80,4 @@ C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciix
 C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciixvii.EFR.Api\Marciixvii.EFR.Api\obj\Debug\netcoreapp3.1\Marciixvii.EFR.App.dll
 C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciixvii.EFR.Api\Marciixvii.EFR.Api\obj\Debug\netcoreapp3.1\Marciixvii.EFR.App.pdb
 C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciixvii.EFR.Api\Marciixvii.EFR.Api\obj\Debug\netcoreapp3.1\Marciixvii.EFR.App.genruntimeconfig.cache
+C:\Users\Plamedi L. Lusembo\source\Electronic Farm Record\Marciixvii-efr\Marciixvii.EFR.Api\Marciixvii.EFR.Api\obj\Debug\netcoreapp3.1\Marciixvii.EFR.App.csprojAssemblyReference.cache
