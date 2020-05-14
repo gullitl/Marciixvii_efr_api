@@ -33,11 +33,15 @@ namespace Marciixvii.EFR.App.Controllers {
 
         [HttpPost(ApiRoute.CrudUrl.Create)]
         public async Task<ActionResult<Utilisateur>> Create(Utilisateur utilisateur) {
-            Utilisateur utilisateur1 = await _utilisateurService.Create(utilisateur);
-            if(utilisateur1 == null) {
-                return BadRequest();
+            if(!await _utilisateurService.IsUsernameOrEmailExists(utilisateur.Username, utilisateur.Email)) { 
+                Utilisateur utilisateur1 = await _utilisateurService.Create(utilisateur);
+                if(utilisateur1 == null) {
+                    return BadRequest();
+                }
+                return Created("", utilisateur1);
+            } else {
+                return Conflict();
             }
-            return Created("", utilisateur1);
         }
 
         [HttpPut(ApiRoute.CrudUrl.Update)]

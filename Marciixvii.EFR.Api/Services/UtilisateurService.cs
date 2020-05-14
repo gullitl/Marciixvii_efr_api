@@ -13,5 +13,9 @@ namespace Marciixvii.EFR.App.Services {
                                                                                             FirstOrDefaultAsync(u => u.Username.Equals(username) && 
                                                                                                                      u.Password.Equals(password));
 
+        public async Task<bool> IsUsernameOrEmailExists(string username, string email) => await Context.Utilisateurs.
+                                                                                            FirstOrDefaultAsync(u => u.Username.Equals(username) ||
+                                                                                                                     u.Password.Equals(email)) != null;
+
     }
 }
