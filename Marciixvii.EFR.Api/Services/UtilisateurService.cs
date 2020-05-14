@@ -10,8 +10,8 @@ namespace Marciixvii.EFR.App.Services {
         public UtilisateurService(AppDbContext context) : base(context) {}
 
         public async Task<Utilisateur> Login(string username, string password) => await Context.Utilisateurs.
-                                                                                            FirstOrDefaultAsync(u => u.Username.Equals(username) && 
-                                                                                                                     u.Password.Equals(password));
+                                                                                            FirstOrDefaultAsync(u => (u.Username.Equals(username) && u.Password.Equals(password)) ||
+                                                                                                                     (u.Email.Equals(username) && u.Password.Equals(password)));
 
         public async Task<bool> IsUsernameOrEmailExists(string username, string email) => await Context.Utilisateurs.
                                                                                             FirstOrDefaultAsync(u => u.Username.Equals(username) ||
