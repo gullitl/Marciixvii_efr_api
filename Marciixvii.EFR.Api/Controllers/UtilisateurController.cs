@@ -1,5 +1,4 @@
 ﻿using Marciixvii.EFR.App.Contracts;
-using Marciixvii.EFR.App.Helpers;
 using Marciixvii.EFR.App.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,10 +17,10 @@ namespace Marciixvii.EFR.App.Controllers {
             _utilisateurService = utilisateurService;
         }
 
-        [HttpGet(ApiRoute.CrudUrl.GetAll)]
+        [HttpGet("getall")]
         public async Task<ActionResult<IEnumerable<Utilisateur>>> GetAll() => await _utilisateurService.GetAll();
 
-        [HttpGet(ApiRoute.CrudUrl.GetById)]
+        [HttpGet("getbyid/{id}")]
         public async Task<ActionResult<Utilisateur>> GetById(int id) {
             Utilisateur utilisateur = await _utilisateurService.GetById(id);
             if(utilisateur == null) {
@@ -31,7 +30,7 @@ namespace Marciixvii.EFR.App.Controllers {
             return utilisateur;
         }
 
-        [HttpPost(ApiRoute.CrudUrl.Create)]
+        [HttpPost("create")]
         public async Task<ActionResult<Utilisateur>> Create(Utilisateur utilisateur) {
             if(!await _utilisateurService.IsUsernameOrEmailExists(utilisateur.Username, utilisateur.Email)) { 
                 Utilisateur utilisateur1 = await _utilisateurService.Create(utilisateur);
@@ -44,10 +43,10 @@ namespace Marciixvii.EFR.App.Controllers {
             }
         }
 
-        [HttpPut(ApiRoute.CrudUrl.Update)]
+        [HttpPut("update")]
         public async Task<ActionResult<bool>> Update(Utilisateur utilisateur) => await _utilisateurService.Update(utilisateur);
 
-        [HttpDelete(ApiRoute.CrudUrl.Delete)]
+        [HttpDelete("delete/{id}")]
         public async Task<ActionResult<bool>> Delete(int id) {
             bool found = await _utilisateurService.Delete(id);
 
@@ -58,7 +57,7 @@ namespace Marciixvii.EFR.App.Controllers {
             return found;
         }
 
-        [HttpGet(ApiRoute.UtilisateurUrl.Login)]
+        [HttpGet("login/{username}/{password}")]
         public async Task<ActionResult<Utilisateur>> Login(string username, string password) {
             Utilisateur utilisateur = await _utilisateurService.Login(username, password);
             if(utilisateur == null) {
