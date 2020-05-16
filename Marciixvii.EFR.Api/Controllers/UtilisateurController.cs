@@ -20,7 +20,7 @@ namespace Marciixvii.EFR.App.Controllers {
         [HttpGet("getall")]
         public async Task<ActionResult<IEnumerable<Utilisateur>>> GetAll() => await _utilisateurService.GetAll();
 
-        [HttpGet("getbyid/{id}")]
+        [HttpGet("getbyid")]
         public async Task<ActionResult<Utilisateur>> GetById(int id) {
             Utilisateur utilisateur = await _utilisateurService.GetById(id);
             if(utilisateur == null) {
@@ -46,7 +46,7 @@ namespace Marciixvii.EFR.App.Controllers {
         [HttpPut("update")]
         public async Task<ActionResult<bool>> Update(Utilisateur utilisateur) => await _utilisateurService.Update(utilisateur);
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete")]
         public async Task<ActionResult<bool>> Delete(int id) {
             bool found = await _utilisateurService.Delete(id);
 
@@ -57,7 +57,7 @@ namespace Marciixvii.EFR.App.Controllers {
             return found;
         }
 
-        [HttpGet("login/{username}/{password}")]
+        [HttpGet("login")]
         public async Task<ActionResult<Utilisateur>> Login(string username, string password) {
             Utilisateur utilisateur = await _utilisateurService.Login(username, password);
             if(utilisateur == null) {
