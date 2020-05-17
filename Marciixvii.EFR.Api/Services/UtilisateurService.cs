@@ -17,5 +17,12 @@ namespace Marciixvii.EFR.App.Services {
                                                                                             FirstOrDefaultAsync(u => u.Username.Equals(username) ||
                                                                                                                      u.Password.Equals(email)) != null;
 
+        public async Task<bool> ChangePassword(int id, string password) {
+            Utilisateur utilisateur = new Utilisateur { Id = id, Password = password };
+            Context.Utilisateurs.Attach(utilisateur);
+            Context.Entry(utilisateur).Property(u => u.Password).IsModified = true;
+            await Context.SaveChangesAsync();
+            return true;
+        }
     }
 }
