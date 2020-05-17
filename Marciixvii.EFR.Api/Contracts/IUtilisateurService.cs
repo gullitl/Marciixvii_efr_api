@@ -6,5 +6,6 @@ namespace Marciixvii.EFR.App.Contracts {
         Task<Utilisateur> Login(string username, string password);
         Task<bool> IsUsernameOrEmailExists(string username, string email);
         Task<bool> ChangePassword(int id, string password);
+        Task<bool> ChangeProfile(Utilisateur utilisateur);
     }
 }

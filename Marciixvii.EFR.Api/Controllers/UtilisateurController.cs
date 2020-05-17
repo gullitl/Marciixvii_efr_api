@@ -46,6 +46,10 @@ namespace Marciixvii.EFR.App.Controllers {
         [HttpPut("update")]
         public async Task<ActionResult<bool>> Update(Utilisateur utilisateur) => await _utilisateurService.Update(utilisateur);
 
+        [HttpPut("changeprofile")]
+        public async Task<ActionResult<bool>> ChangeProfile(Utilisateur utilisateur) => await _utilisateurService.ChangeProfile(utilisateur);
+
+
         [HttpPut("changepassword")]
         public async Task<ActionResult<bool>> ChangePassword(Utilisateur utilisateur) => await _utilisateurService.ChangePassword(utilisateur.Id, utilisateur.Password);
 
