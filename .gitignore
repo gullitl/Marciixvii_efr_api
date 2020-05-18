@@ -1,8 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # chache files
-#/.vs
-#/Marciixvii.EFR.Api/bin/Debug
-#/Marciixvii.EFR.Api/obj/Debug
-#/Marciixvii.EFR.IntegrationTests/bin/Debug
-#/Marciixvii.EFR.IntegrationTests/obj/Debug
+/.vs
+/Marciixvii.EFR.Api/bin/Debug
+/Marciixvii.EFR.Api/obj/Debug
+/Marciixvii.EFR.IntegrationTests/bin/Debug
+/Marciixvii.EFR.IntegrationTests/obj/Debug
