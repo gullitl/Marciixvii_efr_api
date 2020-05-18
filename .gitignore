@@ -1,7 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# cache and dll files
-.vs
-/Marciixvii.EFR.Api/bin
-/Marciixvii.EFR.Api/obj
-/Marciixvii.EFR.IntegrationTests/obj
+# chache files
+#/.vs
+#/Marciixvii.EFR.Api/bin/Debug
+#/Marciixvii.EFR.IntegrationTests/obj/Debug

@@ -64,14 +64,14 @@ namespace Marciixvii.EFR.App.Controllers {
             return found;
         }
 
-        [HttpGet("login")]
-        public async Task<ActionResult<Utilisateur>> Login(string username, string password) {
-            Utilisateur utilisateur = await _utilisateurService.Login(username, password);
-            if(utilisateur == null) {
+        [HttpPost("login")]
+        public async Task<ActionResult<Utilisateur>> Login(Utilisateur utilisateur) {
+            Utilisateur utilisateur1 = await _utilisateurService.Login(utilisateur.Username ?? utilisateur.Email, utilisateur.Password);
+            if(utilisateur1 == null) {
                 return NotFound();
             }
 
-            return utilisateur;
+            return utilisateur1;
         }
     }
 }
