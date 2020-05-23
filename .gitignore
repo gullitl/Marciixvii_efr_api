@@ -3,6 +3,6 @@
 # chache files
 /.vs
 /Marciixvii.EFR.Api/bin/Debug
-/Marciixvii.EFR.Api/obj/Debug
+/Marciixvii.EFR.Api/obj
 /Marciixvii.EFR.IntegrationTests/bin/Debug
-/Marciixvii.EFR.IntegrationTests/obj/Debug
+/Marciixvii.EFR.IntegrationTests/obj
