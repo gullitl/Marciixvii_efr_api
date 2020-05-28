@@ -24,13 +24,17 @@ namespace Marciixvii.EFR.App.Services {
             }
         }
 
-        public async Task<bool> IsUsernameOrEmailExists(string username, string email) {
+        public async Task<Utilisateur> GetIfUsernameOrEmailExists(string username, string email) {
             try {
-                return await Context.Utilisateurs.FirstOrDefaultAsync(u => u.Username.Equals(username) ||
-                                                                      u.Password.Equals(email)) != null;
+                Utilisateur utilisateur = await Context.Utilisateurs.FirstOrDefaultAsync(u => u.Username.Equals(username) ||
+                                                                      u.Password.Equals(email));
+                if(utilisateur != null) { 
+                    Context.Entry(utilisateur).State = EntityState.Detached; 
+                }
+                return utilisateur;
             } catch(InvalidOperationException ex) {
                 _logger.LogCritical(ex, ex.Message);
-                return false;
+                return null;
             }
         }
 

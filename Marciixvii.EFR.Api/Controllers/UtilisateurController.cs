@@ -29,7 +29,7 @@ namespace Marciixvii.EFR.App.Controllers {
 
         [HttpPost("create")]
         public async Task<ActionResult<Utilisateur>> Create(Utilisateur utilisateur) {
-            if(!await _utilisateurService.IsUsernameOrEmailExists(utilisateur.Username, utilisateur.Email)) {
+            if(await _utilisateurService.GetIfUsernameOrEmailExists(utilisateur.Username, utilisateur.Email) != null) {
                 return await _utilisateurService.Create(utilisateur);
             } else
                 return null;
@@ -42,7 +42,16 @@ namespace Marciixvii.EFR.App.Controllers {
         public async Task<ActionResult<bool>> ChangeProfile(Utilisateur utilisateur) => await _utilisateurService.ChangeProfile(utilisateur);
 
         [HttpPut("changepassword")]
-        public async Task<ActionResult<bool>> ChangePassword(Utilisateur utilisateur) => await _utilisateurService.ChangePassword(utilisateur.Id, utilisateur.Password);
+        public async Task<ActionResult<bool>> ChangePassword(Utilisateur utilisateur, string token) {
+            Utilisateur utilisateur1 = null;
+            if(!string.IsNullOrEmpty(token)) {
+                utilisateur1 = await _utilisateurService.GetIfUsernameOrEmailExists(utilisateur.Username, utilisateur.Email);
+                if(utilisateur1 == null) { 
+                    return false; 
+                }
+            }
+            return await _utilisateurService.ChangePassword(utilisateur1 == null ? utilisateur.Id : utilisateur1.Id, utilisateur.Password);
+        }
 
         [HttpDelete("delete")]
         public async Task<ActionResult<bool>> Delete(int id) => await _utilisateurService.Delete(id);
