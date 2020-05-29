@@ -42,9 +42,9 @@ namespace Marciixvii.EFR.App.Controllers {
         public async Task<ActionResult<bool>> ChangeProfile(Utilisateur utilisateur) => await _utilisateurService.ChangeProfile(utilisateur);
 
         [HttpPut("changepassword")]
-        public async Task<ActionResult<bool>> ChangePassword(Utilisateur utilisateur, string token) {
+        public async Task<ActionResult<bool>> ChangePassword(Utilisateur utilisateur) {
             Utilisateur utilisateur1 = null;
-            if(!string.IsNullOrEmpty(token)) {
+            if(!string.IsNullOrEmpty(utilisateur.Username) || !string.IsNullOrEmpty(utilisateur.Email)) {
                 utilisateur1 = await _utilisateurService.GetIfUsernameOrEmailExists(utilisateur.Username, utilisateur.Email);
                 if(utilisateur1 == null) { 
                     return false; 
