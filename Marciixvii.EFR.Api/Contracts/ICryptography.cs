@@ -1,6 +1,6 @@
 ﻿
 namespace Marciixvii.EFR.App.Contracts {
-    public interface ICrypt {
+    public interface ICryptography {
         byte[] Encrypt(string plainText);
         string Decrypt(string cipherText);
     }
