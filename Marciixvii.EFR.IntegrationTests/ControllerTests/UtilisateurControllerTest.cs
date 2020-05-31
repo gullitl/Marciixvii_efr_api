@@ -27,10 +27,10 @@ namespace XUnitTestProject1 {
                 NiveauAcces = NiveauAcces.Administrateur,
             };
 
-            var resp = await _testClient.PostAsJsonAsync(string.Concat(_testClient.BaseAddress.AbsoluteUri, infix, ApiRoute.CrudUrl.Create), utilisateur);
+            var resp = await _testClient.PostAsJsonAsync(string.Concat(_testClient.BaseAddress.AbsoluteUri, infix, "/create"), utilisateur);
             resp.StatusCode.Should().Be(HttpStatusCode.Created);
             // Act
-            var response = await _testClient.GetAsync(string.Concat(_testClient.BaseAddress.AbsoluteUri, infix, ApiRoute.CrudUrl.GetAll));
+            var response = await _testClient.GetAsync(string.Concat(_testClient.BaseAddress.AbsoluteUri, infix, "/getall"));
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);

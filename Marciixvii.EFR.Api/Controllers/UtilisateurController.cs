@@ -1,4 +1,5 @@
 ﻿using Marciixvii.EFR.App.Contracts;
+using Marciixvii.EFR.App.Models.DTOs;
 using Marciixvii.EFR.App.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace Marciixvii.EFR.App.Controllers {
 
         [HttpPost("create")]
         public async Task<ActionResult<Utilisateur>> Create(Utilisateur utilisateur) {
-            if(await _utilisateurService.GetIfUsernameOrEmailExists(utilisateur.Username, utilisateur.Email) != null) {
+            if(await _utilisateurService.GetIfUsernameOrEmailExists(utilisateur.Username?? utilisateur.Email) != null) {
                 return await _utilisateurService.Create(utilisateur);
             } else
                 return null;
@@ -42,15 +43,13 @@ namespace Marciixvii.EFR.App.Controllers {
         public async Task<ActionResult<bool>> ChangeProfile(Utilisateur utilisateur) => await _utilisateurService.ChangeProfile(utilisateur);
 
         [HttpPut("changepassword")]
-        public async Task<ActionResult<bool>> ChangePassword(Utilisateur utilisateur) {
-            Utilisateur utilisateur1 = null;
-            if(!string.IsNullOrEmpty(utilisateur.Username) || !string.IsNullOrEmpty(utilisateur.Email)) {
-                utilisateur1 = await _utilisateurService.GetIfUsernameOrEmailExists(utilisateur.Username, utilisateur.Email);
-                if(utilisateur1 == null) { 
+        public async Task<ActionResult<bool>> ChangePassword(UtilisateurNewPassword unp) {
+            if(unp.Token != null) { 
+                if(!_utilisateurService.IsChangePasswordTokenValid(unp.Token, unp.Username)) {
                     return false; 
                 }
             }
-            return await _utilisateurService.ChangePassword(utilisateur1 == null ? utilisateur.Id : utilisateur1.Id, utilisateur.Password);
+            return await _utilisateurService.ChangePassword(unp.Username, unp.Password);
         }
 
         [HttpDelete("delete")]

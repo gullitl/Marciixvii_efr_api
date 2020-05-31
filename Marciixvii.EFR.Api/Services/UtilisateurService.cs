@@ -6,11 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Marciixvii.EFR.App.Services {
     public class UtilisateurService : CrudService<Utilisateur>, IUtilisateurService {
-        public UtilisateurService(ILogger<CrudService<Utilisateur>> logger, AppDbContext context) : base(logger, context) {
+        private readonly ICryptography _desCryptography;
+        public UtilisateurService(ILogger<CrudService<Utilisateur>> logger, AppDbContext context, ICryptography desCryptography) : base(logger, context) {
+            _desCryptography = desCryptography;
         }
 
         public async Task<Utilisateur> Login(string username, string password) {
@@ -24,31 +27,52 @@ namespace Marciixvii.EFR.App.Services {
             }
         }
 
-        public async Task<Utilisateur> GetIfUsernameOrEmailExists(string username, string email) {
+        public async Task<Utilisateur> GetIfUsernameOrEmailExists(string usernameOrEmail) {
             try {
-                Utilisateur utilisateur = await Context.Utilisateurs.FirstOrDefaultAsync(u => u.Username.Equals(username) ||
-                                                                      u.Password.Equals(email));
-                if(utilisateur != null) { 
-                    Context.Entry(utilisateur).State = EntityState.Detached; 
-                }
-                return utilisateur;
+                return await Context.Utilisateurs.FirstOrDefaultAsync(u => u.Username.Equals(usernameOrEmail) || u.Email.Equals(usernameOrEmail));
             } catch(InvalidOperationException ex) {
                 _logger.LogCritical(ex, ex.Message);
                 return null;
             }
         }
 
-        public async Task<bool> ChangePassword(int id, string password) {
+        public async Task<bool> ChangePassword(string usernameOrEmail, string password) {
             try {
-                Utilisateur utilisateur = new Utilisateur { Id = id, Password = password };
-                Context.Utilisateurs.Attach(utilisateur);
-                Context.Entry(utilisateur).Property(u => u.Password).IsModified = true;
-                await Context.SaveChangesAsync();
-                return true;
+                Utilisateur utilisateur = await GetIfUsernameOrEmailExists(usernameOrEmail);
+                if(utilisateur != null) {
+                    utilisateur.Password = password;
+                    await Context.SaveChangesAsync();
+                    return true;
+                } else
+                    return false;
+                
             } catch(DbUpdateException ex) {
                 _logger.LogError(ex, ex.Message);
                 return false;
             } catch(InvalidOperationException ex) {
+                _logger.LogCritical(ex, ex.Message);
+                return false;
+            }
+        }
+
+        public bool IsChangePasswordTokenValid(string token, string usernameOrEmail) {
+            try {
+                string plain = _desCryptography.Decrypt(token);
+                string[] flats = plain.Split('#');
+                string changePasswordToken = flats[0];
+                double timeout = double.Parse(flats[1]);
+                DateTime oDate = DateTime.Parse(flats[2]);
+
+                if(changePasswordToken != usernameOrEmail) {
+                    return false;
+                }
+
+                DateTime datetimeout = oDate.AddMinutes(timeout);
+                if(datetimeout.CompareTo(DateTime.Now) < 0) {
+                    return false;
+                }
+                return true;
+            } catch(CryptographicException ex) {
                 _logger.LogCritical(ex, ex.Message);
                 return false;
             }

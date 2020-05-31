@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Marciixvii.EFR.App.Contracts;
 using Marciixvii.EFR.App.DataAccess.Contexts;
+using Marciixvii.EFR.App.Helpers.Crypt;
 using Marciixvii.EFR.App.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +31,7 @@ namespace Marciixvii.EFR.Api {
             services.AddDbContext<AppDbContext>(options =>
                                                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IUtilisateurService, UtilisateurService>();
+            services.AddScoped<ICryptography, DesCryptography>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
