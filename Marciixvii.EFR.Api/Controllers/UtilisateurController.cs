@@ -9,20 +9,20 @@ namespace Marciixvii.EFR.App.Controllers {
     [ApiController]
     [Route("[controller]")]
     public class UtilisateurController : ControllerBase {
-        private readonly IUtilisateurService _utilisateurService;
+        private readonly IUtilisateurService UtilisateurService;
 
         public UtilisateurController(IUtilisateurService utilisateurService) {
-            _utilisateurService = utilisateurService;
+            UtilisateurService = utilisateurService;
         }
 
         [HttpGet("getall")]
         public async Task<ActionResult<List<Utilisateur>>> GetAll() {
-            return Ok(await _utilisateurService.GetAll());
+            return Ok(await UtilisateurService.GetAll());
         }
 
         [HttpGet("getbyid")]
         public async Task<ActionResult<Utilisateur>> GetById(int id) {
-            Utilisateur utilisateur = await _utilisateurService.GetById(id);
+            Utilisateur utilisateur = await UtilisateurService.GetById(id);
             if(utilisateur == null) {
                 return NotFound("Mawa trop");
             }
@@ -32,34 +32,34 @@ namespace Marciixvii.EFR.App.Controllers {
 
         [HttpPost("create")]
         public async Task<ActionResult<Utilisateur>> Create(Utilisateur utilisateur) {
-            if(await _utilisateurService.GetIfUsernameOrEmailExists(utilisateur.Username?? utilisateur.Email) == null) {
-                return await _utilisateurService.Create(utilisateur);
+            if(await UtilisateurService.GetIfUsernameOrEmailExists(utilisateur.Username?? utilisateur.Email) == null) {
+                return await UtilisateurService.Create(utilisateur);
             } else
                 return null;
         }
 
         [HttpPut("update")]
-        public async Task<ActionResult<Utilisateur>> Update(Utilisateur utilisateur) => await _utilisateurService.Update(utilisateur);
+        public async Task<ActionResult<Utilisateur>> Update(Utilisateur utilisateur) => await UtilisateurService.Update(utilisateur);
 
         [HttpPut("changeprofil")]
-        public async Task<ActionResult<Utilisateur>> ChangeProfile(Utilisateur utilisateur) => await _utilisateurService.ChangeProfile(utilisateur);
+        public async Task<ActionResult<Utilisateur>> ChangeProfile(Utilisateur utilisateur) => await UtilisateurService.ChangeProfile(utilisateur);
 
         [HttpPut("changepassword")]
         public async Task<ActionResult<Utilisateur>> ChangePassword(UtilisateurNewPassword unp) {
             if(unp.Token != null) { 
-                if(!_utilisateurService.IsChangePasswordTokenValid(unp.Token, unp.Username)) {
+                if(!UtilisateurService.IsChangePasswordTokenValid(unp.Token, unp.Username)) {
                     return null; 
                 }
             }
-            return await _utilisateurService.ChangePassword(unp.Username, unp.Password);
+            return await UtilisateurService.ChangePassword(unp.Username, unp.Password);
         }
 
         [HttpDelete("delete")]
-        public async Task<ActionResult<bool>> Delete(int id) => await _utilisateurService.Delete(id);
+        public async Task<ActionResult<bool>> Delete(int id) => await UtilisateurService.Delete(id);
 
         [HttpPost("login")]
         public async Task<ActionResult<Utilisateur>> Login(Utilisateur utilisateur) {
-            return await _utilisateurService.Login(utilisateur.Username ?? utilisateur.Email, utilisateur.Password); 
+            return await UtilisateurService.Login(utilisateur.Username ?? utilisateur.Email, utilisateur.Password); 
         }
     }
 }

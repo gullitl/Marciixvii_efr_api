@@ -1,13 +1,10 @@
 ﻿using Marciixvii.EFR.App.Helpers.Enumerations;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Marciixvii.EFR.App.Models.Entities {
     [Table("utilisateur")]
-    public class Utilisateur : EntityBase{
+    public class Utilisateur : EntityBase {
         public string Nom { get; set; }
         public string Postnom { get; set; }
         public string Prenom { get; set; }
