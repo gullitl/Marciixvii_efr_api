@@ -18,5 +18,31 @@ namespace Marciixvii.EFR.App.Models.Entities {
         public string Password { get; set; }
         public NiveauAcces NiveauAcces { get; set; }
 
+        public override bool Equals(object obj) {
+            return obj is Utilisateur utilisateur &&
+                   Nom == utilisateur.Nom &&
+                   Postnom == utilisateur.Postnom &&
+                   Prenom == utilisateur.Prenom &&
+                   Sexe == utilisateur.Sexe &&
+                   Photosrc == utilisateur.Photosrc &&
+                   Email == utilisateur.Email &&
+                   Username == utilisateur.Username &&
+                   Password == utilisateur.Password &&
+                   NiveauAcces == utilisateur.NiveauAcces;
+        }
+
+        public override int GetHashCode() {
+            HashCode hash = new HashCode();
+            hash.Add(Nom);
+            hash.Add(Postnom);
+            hash.Add(Prenom);
+            hash.Add(Sexe);
+            hash.Add(Photosrc);
+            hash.Add(Email);
+            hash.Add(Username);
+            hash.Add(Password);
+            hash.Add(NiveauAcces);
+            return hash.ToHashCode();
+        }
     }
 }

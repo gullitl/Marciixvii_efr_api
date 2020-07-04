@@ -1,4 +1,5 @@
 using Marciixvii.EFR.Api;
+using Marciixvii.EFR.App.Contracts;
 using Marciixvii.EFR.App.DataAccess.Contexts;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +9,10 @@ using System.Net.Http;
 
 namespace XUnitTestProject1 {
     public abstract class IntegrationTest {
-        protected readonly HttpClient _testClient;
+        protected readonly HttpClient TestClient;
+        protected readonly ICryptography DesCryptography;
         protected IntegrationTest() {
-            var appFactory = new WebApplicationFactory<Startup>()
+            WebApplicationFactory<Startup> appFactory = new WebApplicationFactory<Startup>()
                 .WithWebHostBuilder(builder => {
                     builder.ConfigureServices(services => {
                         services.RemoveAll(typeof(DbContextOptions<AppDbContext>));
@@ -19,7 +21,9 @@ namespace XUnitTestProject1 {
                         });
                     });
                 });
-            _testClient = appFactory.CreateClient();
+            IServiceScope scope = appFactory.Services.CreateScope();
+            TestClient = appFactory.CreateClient();
+            DesCryptography = scope.ServiceProvider.GetRequiredService<ICryptography>();
         }
     }
 }

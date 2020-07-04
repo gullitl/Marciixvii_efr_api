@@ -8,6 +8,6 @@ namespace Marciixvii.EFR.App.Contracts {
         Task<TEntity> GetById(int id);
         Task<bool> Delete(int id);
         Task<TEntity> Create(TEntity tEntity);
-        Task<bool> Update(TEntity tEntity);
+        Task<TEntity> Update(TEntity tEntity);
     }
 }

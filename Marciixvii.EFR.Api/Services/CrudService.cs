@@ -21,10 +21,10 @@ namespace Marciixvii.EFR.App.Services {
                 return tEntity;
             } catch(InvalidOperationException ex) {
                 _logger.LogCritical(ex, ex.Message);
-                return null;
+                throw ex;
             } catch(DbUpdateException ex) {
                 _logger.LogError(ex, ex.Message);
-                return null;
+                throw ex;
             }
 
         }
@@ -41,10 +41,10 @@ namespace Marciixvii.EFR.App.Services {
                 return true;
             } catch(DbUpdateException ex) {
                 _logger.LogError(ex, ex.Message);
-                return false;
+                throw ex;
             } catch(InvalidOperationException ex) {
                 _logger.LogCritical(ex, ex.Message);
-                return false;
+                throw ex;
             }
 
         }
@@ -54,7 +54,7 @@ namespace Marciixvii.EFR.App.Services {
                 return await Context.Set<TEntity>().ToListAsync();
             } catch(InvalidOperationException ex) {
                 _logger.LogCritical(ex, ex.Message);
-                return null;
+                throw ex;
             }
         }
 
@@ -63,21 +63,21 @@ namespace Marciixvii.EFR.App.Services {
                 return await Context.Set<TEntity>().FindAsync(id);
             } catch(InvalidOperationException ex) {
                 _logger.LogCritical(ex, ex.Message);
-                return null;
+                throw ex;
             }
         }
 
-        public async Task<bool> Update(TEntity tEntity) {
+        public async Task<TEntity> Update(TEntity tEntity) {
             try {
                 Context.Entry(tEntity).State = EntityState.Modified;
                 await Context.SaveChangesAsync();
-                return true;
+                return tEntity;
             } catch(DbUpdateException ex) {
                 _logger.LogError(ex, ex.Message);
-                return false;
+                throw ex;
             } catch(InvalidOperationException ex) {
                 _logger.LogCritical(ex, ex.Message);
-                return false;
+                throw ex;
             }
 
         }

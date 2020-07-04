@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marciixvii.EFR.App", "Marciixvii.EFR.Api\Marciixvii.EFR.App.csproj", "{E8BA1B0E-5C8C-4687-943D-DC97F687A610}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{3A005191-F4CC-47DE-A683-45349C196C9A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{3A005191-F4CC-47DE-A683-45349C196C9A}"
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
 		Marciixvii.EFR.Api\Dockerfile = Marciixvii.EFR.Api\Dockerfile
@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{3A005191
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A35BABC3-6561-467B-8F3E-422718A86985}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{861A7731-EF07-4EAF-86F0-59FA9159F9AD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{861A7731-EF07-4EAF-86F0-59FA9159F9AD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marciixvii.EFR.IntegrationTests", "Marciixvii.EFR.IntegrationTests\Marciixvii.EFR.IntegrationTests.csproj", "{0D992974-5D64-47CC-AF8D-A0C5161277E5}"
 EndProject

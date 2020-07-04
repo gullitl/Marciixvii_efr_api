@@ -11,9 +11,11 @@ using System.Threading.Tasks;
 
 namespace Marciixvii.EFR.App.Services {
     public class UtilisateurService : CrudService<Utilisateur>, IUtilisateurService {
-        private readonly ICryptography _desCryptography;
-        public UtilisateurService(ILogger<CrudService<Utilisateur>> logger, AppDbContext context, ICryptography desCryptography) : base(logger, context) {
-            _desCryptography = desCryptography;
+        private readonly ICryptography DesCryptography;
+        public UtilisateurService(ILogger<CrudService<Utilisateur>> logger, 
+                                  AppDbContext context, 
+                                  ICryptography desCryptography) : base(logger, context) {
+            DesCryptography = desCryptography;
         }
 
         public async Task<Utilisateur> Login(string username, string password) {
@@ -23,7 +25,7 @@ namespace Marciixvii.EFR.App.Services {
                                                 (u.Email.Equals(username) && u.Password.Equals(password)));
             } catch(InvalidOperationException ex) {
                 _logger.LogCritical(ex, ex.Message);
-                return null;
+                throw ex;
             }
         }
 
@@ -32,32 +34,32 @@ namespace Marciixvii.EFR.App.Services {
                 return await Context.Utilisateurs.FirstOrDefaultAsync(u => u.Username.Equals(usernameOrEmail) || u.Email.Equals(usernameOrEmail));
             } catch(InvalidOperationException ex) {
                 _logger.LogCritical(ex, ex.Message);
-                return null;
+                throw ex;
             }
         }
 
-        public async Task<bool> ChangePassword(string usernameOrEmail, string password) {
+        public async Task<Utilisateur> ChangePassword(string usernameOrEmail, string password) {
             try {
                 Utilisateur utilisateur = await GetIfUsernameOrEmailExists(usernameOrEmail);
                 if(utilisateur != null) {
                     utilisateur.Password = password;
                     await Context.SaveChangesAsync();
-                    return true;
+                    return utilisateur;
                 } else
-                    return false;
+                    return null;
                 
             } catch(DbUpdateException ex) {
                 _logger.LogError(ex, ex.Message);
-                return false;
+                throw ex;
             } catch(InvalidOperationException ex) {
                 _logger.LogCritical(ex, ex.Message);
-                return false;
+                throw ex;
             }
         }
 
         public bool IsChangePasswordTokenValid(string token, string usernameOrEmail) {
             try {
-                string plain = _desCryptography.Decrypt(token);
+                string plain = DesCryptography.Decrypt(token);
                 string[] flats = plain.Split('#');
                 string changePasswordToken = flats[0];
                 double timeout = double.Parse(flats[1]);
@@ -74,11 +76,11 @@ namespace Marciixvii.EFR.App.Services {
                 return true;
             } catch(CryptographicException ex) {
                 _logger.LogCritical(ex, ex.Message);
-                return false;
+                throw ex;
             }
         }
 
-        public async Task<bool> ChangeProfile(Utilisateur utilisateur) {
+        public async Task<Utilisateur> ChangeProfile(Utilisateur utilisateur) {
             try {
                 Context.Utilisateurs.Attach(utilisateur);
                 EntityEntry<Utilisateur> contextEntry = Context.Entry(utilisateur);
@@ -89,13 +91,13 @@ namespace Marciixvii.EFR.App.Services {
                 contextEntry.Property(u => u.Email).IsModified = true;
                 contextEntry.Property(u => u.Username).IsModified = true;
                 await Context.SaveChangesAsync();
-                return true;
+                return utilisateur;
             } catch(DbUpdateException ex) {
                 _logger.LogError(ex, ex.Message);
-                return false;
+                throw ex;
             } catch(InvalidOperationException ex) {
                 _logger.LogCritical(ex, ex.Message);
-                return false;
+                throw ex;
             }
             
         }
