@@ -1,5 +1,5 @@
-﻿using Marciixvii.EFR.App.Helpers.Enumerations;
-using System;
+﻿using System;
+using Marciixvii.EFR.App.Helpers.Enumerations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Marciixvii.EFR.App.Models.Entities {

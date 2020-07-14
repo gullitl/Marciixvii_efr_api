@@ -3,9 +3,9 @@
 namespace Marciixvii.EFR.App.Helpers.Enumerations {
     public enum NiveauAcces {
         [Description("Administrateur")]
-        Administrateur = 1,
+        Administrateur,
 
         [Description("Utilisateur")]
-        Utilisateur = 2
+        Utilisateur
     }
 }

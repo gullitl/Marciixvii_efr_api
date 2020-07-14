@@ -16,9 +16,7 @@ namespace Marciixvii.EFR.App.Controllers {
         }
 
         [HttpGet("getall")]
-        public async Task<ActionResult<List<Utilisateur>>> GetAll() {
-            return Ok(await UtilisateurService.GetAll());
-        }
+        public async Task<ActionResult<List<Utilisateur>>> GetAll() => Ok(await UtilisateurService.GetAll());
 
         [HttpGet("getbyid")]
         public async Task<ActionResult<Utilisateur>> GetById(int id) {
@@ -58,8 +56,6 @@ namespace Marciixvii.EFR.App.Controllers {
         public async Task<ActionResult<bool>> Delete(int id) => await UtilisateurService.Delete(id);
 
         [HttpPost("login")]
-        public async Task<ActionResult<Utilisateur>> Login(Utilisateur utilisateur) {
-            return await UtilisateurService.Login(utilisateur.Username ?? utilisateur.Email, utilisateur.Password); 
-        }
+        public async Task<ActionResult<Utilisateur>> Login(Utilisateur utilisateur) => await UtilisateurService.Login(utilisateur.Username ?? utilisateur.Email, utilisateur.Password); 
     }
 }
